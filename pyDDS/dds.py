@@ -112,7 +112,7 @@ class DDSCore:
         :param value: (bytes or float or int) value which should be returned as a number
         :return: (float or int) the converted value
         """
-        assert type(value) in [bytes, float, np.float64, int], "value has to be either bytes or float or int"
+        assert isinstance(value, (bytes, float, int)), "value has to be either bytes or float or int"
 
         return int.from_bytes(value, byteorder="big") if type(value) is bytes else value
 
@@ -125,7 +125,7 @@ class DDSCore:
         :return: (bytes) the converted value
         """
         assert width is not None and type(width) is int, "tuning word width has to be set as integer"
-        assert type(value) in [bytes, float, np.float64, int], "value has to be either bytes or float or int"
+        assert isinstance(value, (bytes, float, int)), "value has to be either bytes or float or int"
         if type(value) is bytes:
             assert len(value) == width, "width of value does not match target width"
 
