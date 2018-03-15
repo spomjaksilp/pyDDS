@@ -1,5 +1,5 @@
 import numpy as np
-
+from .connectors import Connector
 
 class DDSGroup:
     """
@@ -8,14 +8,50 @@ class DDSGroup:
     :param sysclk: (int) DDS system clock
     """
 
+    # tuning word widths for helper functions
     FTW_WIDTH = None  # 32
     POW_WIDTH = None  # 16
     ASF_WIDTH = None  # AD9914: 12  AD9910:14
 
-    def __init__(self, sysclk):
+    # connector object
+    _connector = None
+
+    def __init__(self, sysclk, connector):
         assert (self.FTW_WIDTH and self.POW_WIDTH and self.ASF_WIDTH) is not None, "tuning word widths have to be set!"
         assert type(sysclk) is float, "sysclk frequency has to be float"
         self.f_sysclk = sysclk
+
+        assert isinstance(connector, Connector)
+        self._connector = connector
+
+    def init_dds(self):
+        raise NotImplementedError
+
+    # low level io
+    def _write(self, location, data):
+        """
+        Write method just uses the connector.
+        :param location:
+        :param data:
+        :return:
+        """
+        self._connector.write(location=location, data=data)
+
+    def _read(self, location, width):
+        """
+        Read method just uses the connector.
+        :param location:
+        :param width:
+        :return:
+        """
+        return self._connector.read(location=location, width=width)
+
+    def _read_all(self):
+        """
+        Read_all method just uses the connector.
+        :return:
+        """
+        return self._connector.read_all()
 
     # basic operations
     def reset(self):
