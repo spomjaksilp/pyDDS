@@ -1,7 +1,8 @@
 import numpy as np
 from .connectors import Connector
 
-class DDSGroup:
+
+class DDSCore:
     """
     Direct Digital Synthesis (DDS) driver.
     Manages all channels.
@@ -178,10 +179,10 @@ class DDSGroup:
 
 class DDSChannel:
     """
-    Manages a single channel, to be used in conjunction with DDSGroup.
+    Manages a single channel, to be used in conjunction with DDSCore.
     """
 
-    def __init__(self):
+    def __init__(self, dds):
         pass
 
     def __del__(self):

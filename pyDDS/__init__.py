@@ -1,1 +1,1 @@
-from .dds import DDSGroup
+from .dds import DDSCore

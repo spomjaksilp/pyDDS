@@ -4,11 +4,11 @@ import pytest
 
 
 # dummy classes
-class WrongInheritedDDS(pyDDS.DDSGroup):
+class WrongInheritedDDS(pyDDS.DDSCore):
     pass
 
 
-class AD9914(pyDDS.DDSGroup):
+class AD9914(pyDDS.DDSCore):
     FTW_WIDTH = 32
     POW_WIDTH = 16
     ASF_WIDTH = 12
