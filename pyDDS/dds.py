@@ -182,8 +182,12 @@ class DDSChannel:
     Manages a single channel, to be used in conjunction with DDSCore.
     """
 
-    def __init__(self, dds):
-        pass
+    # every channel has to be attached to a core device
+    _core = None
+
+    def __init__(self, core):
+        assert isinstance(core, DDSCore), "core parameter must be DDSCore instance or instance of an inherited class"
+        self._core = core
 
     def __del__(self):
         raise NotImplementedError
