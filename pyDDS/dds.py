@@ -25,7 +25,7 @@ class DDSCore:
         assert isinstance(connector, Connector)
         self._connector = connector
 
-    def init_dds(self):
+    def init_dds(self, *args, **kwargs):
         raise NotImplementedError
 
     # low level io
@@ -60,14 +60,14 @@ class DDSCore:
         Reset DDS device.
         :return:
         """
-        raise NotImplementedError
+        self._connector.reset_device()
 
     def update_io(self):
         """
         Trigger IO update.
         :return:
         """
-        raise NotImplementedError
+        self._connector.update_io()
 
     def set_drhold(self, value):
         """
@@ -75,7 +75,7 @@ class DDSCore:
         :param value: (bool) True=hold, False=unhold
         :return:
         """
-        raise NotImplementedError
+        self._connector.set_drhold()
 
     # general device configuration
     def set_refclk(self, refclk):
