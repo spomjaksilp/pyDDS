@@ -2,10 +2,9 @@ import numpy as np
 
 
 class DDSGroup:
-    """Core device Direct Digital Synthesis (DDS) driver.
-
-    Gives access to the DDS functionality of the core device.
-
+    """
+    Direct Digital Synthesis (DDS) driver.
+    Manages all channels.
     :param sysclk: (int) DDS system clock
     """
 
@@ -17,6 +16,56 @@ class DDSGroup:
         assert (self.FTW_WIDTH and self.POW_WIDTH and self.ASF_WIDTH) is not None, "tuning word widths have to be set!"
         assert type(sysclk) is float, "sysclk frequency has to be float"
         self.f_sysclk = sysclk
+
+    # basic operations
+    def reset(self):
+        """
+        Reset DDS device.
+        :return:
+        """
+        raise NotImplementedError
+
+    def update_io(self):
+        """
+        Trigger IO update.
+        :return:
+        """
+        raise NotImplementedError
+
+    def set_drhold(self, value):
+        """
+        Pause the digital ramp generator.
+        :param value: (bool) True=hold, False=unhold
+        :return:
+        """
+        raise NotImplementedError
+
+    # general device configuration
+    def set_refclk(self, refclk):
+        """
+        Set the reference clock value.
+        :param refclk:
+        :return:
+        """
+        raise NotImplementedError
+
+    def set_pll(self, *args, **kwargs):
+        """
+        Configure the phase locking loop.
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        raise NotImplementedError
+
+    def set_sine_ouput(self, value=False):
+        """
+        Confugure sine (True) or cosine (False, default) output.
+        :param value:
+        :return:
+        """
+        raise NotImplementedError
+
 
     # helpers
     @staticmethod
@@ -89,3 +138,24 @@ class DDSGroup:
         :param asf: (bytes) amplitude scale factor
         """
         return 20 * np.log10(self._ensure_number(asf) / 2 ** self.ASF_WIDTH)
+
+
+class DDSChannel:
+    """
+    Manages a single channel, to be used in conjunction with DDSGroup.
+    """
+
+    def __init__(self):
+        pass
+
+    def __del__(self):
+        raise NotImplementedError
+
+    def set_singletone(self, frequency, phase, amplitude, profile):
+        raise NotImplementedError
+
+    def set_frequency_sweep(self, *args, **kwargs):
+        raise NotImplementedError
+
+    def set_amplitude_sweep(self, *args, **kwargs):
+        raise NotImplementedError
